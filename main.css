@@ -1,3 +1,17 @@
+:root {
+  --main-color: #403d58;
+  --main-color-dark: #2a283a;
+  --main-color-light: #615c85;
+  --second-color: #87b6a7;
+  --second-color-dark: #5b9683;
+  --second-color-light: #b7d3ca;
+  --third-color: #fc7753;
+  --third-color-dark: #fb3c08;
+  --third-color-light: #fdb29e;
+  --accent-color-1: #e3f09b;
+  --accent-color-2: #81a4cd;
+}
+
 *,
 *::after,
 *::before {
@@ -17,18 +31,22 @@ body {
 
 h1 {
   font-size: 4em;
+  color: var(--main-color);
 }
 
 h2 {
   font-size: 3em;
+  color: var(--main-color);
 }
 
 h3 {
   font-size: 2.5em;
+  color: var(--main-color);
 }
 
 h4 {
   font-size: 2em;
+  color: var(--main-color);
 }
 
 p,
@@ -36,4 +54,21 @@ td,
 th,
 label {
   font-size: 1.5em;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem;
+}
+
+.panel {
+  padding: 3rem;
+  margin: 2rem;
+  background-color: var(--second-color-light);
+  border-radius: 5px;
+  border: 5px solid var(--second-color-dark);
+  box-shadow: 2px 2px 3px var(--main-color-light);
 }

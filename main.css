@@ -94,9 +94,19 @@ button {
 }
 
 .main-list {
-  padding: 3rem;
+  padding: 1rem;
   margin: 2rem;
   background-color: var(--third-color-light);
   border-radius: 5px;
   border: 1px solid var(--third-color-dark);
+}
+
+.item-container {
+  padding: 1rem;
+  margin: 1rem;
+  background-color: var(--third-color-light);
+  border-radius: 5px;
+  border: 1px solid var(--accent-color-2);
+  display: flex;
+  justify-content: space-between;
 }

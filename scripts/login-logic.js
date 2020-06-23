@@ -9,7 +9,6 @@ class LoginLogic {
       document.getElementById("username").value === "admin" &&
       document.getElementById("password").value === "admin"
     ) {
-      console.log("here");
       window.location.href = "/todo-list.html";
     } else {
       // TODO APPENED ERROR MESSGAE or do something like that
@@ -17,4 +16,4 @@ class LoginLogic {
   }
 }
 
-export { LoginLogic };
+new LoginLogic();

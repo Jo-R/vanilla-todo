@@ -3,9 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ToDo List</title>
+    <link rel="stylesheet" href="main.css" />
+    <title>Vanilla ToDo List</title>
   </head>
   <body>
-    <h1>list goes here</h1>
+    <div class="panel">
+      <button id="add-btn">Add</button>
+      <input id="new-item" class="hidden" />
+      <button id="confirm-add" class="hidden">OK</button>
+
+      <div id="todo-list" class="main-list"></div>
+    </div>
+
+    <script src="./scripts/todo-logic.js"></script>
   </body>
 </html>

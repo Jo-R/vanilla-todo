@@ -1,7 +1,7 @@
 :root {
-  --main-color: #403d58;
-  --main-color-dark: #2a283a;
-  --main-color-light: #615c85;
+  --main-text-color: #403d58;
+  --main-text-color-dark: #2a283a;
+  --main-text-color-light: #615c85;
   --second-color: #87b6a7;
   --second-color-dark: #5b9683;
   --second-color-light: #b7d3ca;
@@ -31,22 +31,22 @@ body {
 
 h1 {
   font-size: 4em;
-  color: var(--main-color);
+  color: var(--main-text-color);
 }
 
 h2 {
   font-size: 3em;
-  color: var(--main-color);
+  color: var(--main-text-color);
 }
 
 h3 {
   font-size: 2.5em;
-  color: var(--main-color);
+  color: var(--main-text-color);
 }
 
 h4 {
   font-size: 2em;
-  color: var(--main-color);
+  color: var(--main-text-color);
 }
 
 p,
@@ -54,9 +54,29 @@ td,
 th,
 label {
   font-size: 1.5em;
+  color: var(--main-text-color-dark);
 }
 
-.flex-column {
+.light-text {
+  color: var(--main-text-color-light);
+  font-style: italic;
+}
+
+button {
+  padding: 1rem 2rem;
+  border-radius: 5px;
+  background-color: var(--third-color-light);
+  color: var(--main-color-dark);
+  border: 2px solid var(--third-color);
+  font-weight: bold;
+}
+
+.hidden {
+  display: none;
+  visibility: hidden;
+}
+
+.flex-column-centered {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -71,4 +91,12 @@ label {
   border-radius: 5px;
   border: 5px solid var(--second-color-dark);
   box-shadow: 2px 2px 3px var(--main-color-light);
+}
+
+.main-list {
+  padding: 3rem;
+  margin: 2rem;
+  background-color: var(--third-color-light);
+  border-radius: 5px;
+  border: 1px solid var(--third-color-dark);
 }

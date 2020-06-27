@@ -10,6 +10,10 @@ class ToDoLogic {
 
     if (localStorage.getItem("todo")) {
       const items = JSON.parse(window.localStorage.getItem("todo"));
+      if (items.length === 0) {
+        return;
+      }
+      document.getElementById("todo-list").classList.remove("hidden");
       items.map((item, idx) => {
         this.createListItem(item, idx);
       });
@@ -32,6 +36,10 @@ class ToDoLogic {
     const toRemove = document.getElementById(`item-${idToDelete}`);
     toRemove.parentNode.removeChild(toRemove);
     localStorage.setItem("todo", JSON.stringify(newList));
+    if (newList.length === 0) {
+      document.getElementById("todo-list").classList.add("hidden");
+      return;
+    }
     newList.map((item) => {
       this.createListItem(item);
     });
@@ -61,6 +69,9 @@ class ToDoLogic {
     input.classList.add("hidden");
     document.getElementById("confirm-add").classList.add("hidden");
     const existingStoredItems = JSON.parse(window.localStorage.getItem("todo"));
+    if (existingStoredItems.length === 0) {
+      document.getElementById("todo-list").classList.remove("hidden");
+    }
     const newItem = {
       id: existingStoredItems.length + 1,
       value: newItemText,

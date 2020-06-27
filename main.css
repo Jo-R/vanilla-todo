@@ -58,11 +58,6 @@ label {
   color: var(--main-text-color-dark);
 }
 
-.form-inputs {
-  position: relative;
-  margin: 1.5rem;
-}
-
 input {
   font-size: 1.5rem;
   font-family: inherit;
@@ -79,6 +74,12 @@ input {
 input:focus {
   outline: none;
   border-bottom: 3px solid var(--main-text-color-light);
+}
+
+/**wrapper class if using hover label cf positioning */
+.form-input {
+  position: relative;
+  margin: 1.5rem;
 }
 
 .hover-label {
@@ -103,6 +104,7 @@ button {
   color: var(--main-color-dark);
   border: 2px solid var(--third-color);
   font-weight: bold;
+  text-transform: uppercase;
 }
 
 .light-text {

@@ -102,7 +102,7 @@ button {
   padding: 1rem 2rem;
   border-radius: 5px;
   background-color: var(--third-color-light);
-  color: var(--main-color-dark);
+  color: var(--main-text-color-dark);
   border: 2px solid var(--third-color);
   font-weight: bold;
   text-transform: uppercase;
@@ -111,6 +111,10 @@ button {
 .light-text {
   color: var(--main-text-color-light);
   font-style: italic;
+}
+
+.error-text {
+  color: red;
 }
 
 .hidden {
@@ -165,11 +169,10 @@ button {
 
 .panel {
   padding: 3rem;
-  margin: 2rem;
   background-color: var(--second-color-light);
   border-radius: 5px;
-  border: 5px solid var(--second-color-dark);
-  box-shadow: 2px 2px 3px var(--main-color-light);
+  border: 2px solid var(--second-color-dark);
+  box-shadow: 3px 3px 4px var(--second-color);
 }
 
 .add-item-ribbon {

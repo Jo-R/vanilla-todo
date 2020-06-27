@@ -11,7 +11,13 @@ class LoginLogic {
     ) {
       window.location.href = "/todo-list.html";
     } else {
-      // TODO APPENED ERROR MESSGAE or do something like that
+      const para = document.createElement("P");
+      const text = document.createTextNode(
+        "Your username or password is incorrect"
+      );
+      para.appendChild(text);
+      para.classList.add("error-text");
+      document.getElementById("login-box").appendChild(para);
     }
   }
 }

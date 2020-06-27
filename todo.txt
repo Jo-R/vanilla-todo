@@ -1,9 +1,12 @@
-- login error
+- handle very long todos
 - mark as done but keep
 - edit items
 - semantic html
-- css bem?
+- css bem? orgainise better anyway
 - a11y check
+- js check -organise/extract extract
+
+Nice to have extras
 - priorities - mark as high -> topof displayed list
 - search/filter todos, the list gets bit don't wanna scroll
 - pomodoro - maybe count how many you've done on an item

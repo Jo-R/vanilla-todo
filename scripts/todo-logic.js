@@ -65,16 +65,16 @@ class ToDoLogic {
   }
 
   createListItem(item) {
-    var div = document.createElement("DIV");
+    const div = document.createElement("DIV");
     div.classList.add("item-container");
     div.setAttribute("id", `item-${item.id}`);
-    var para = document.createElement("P");
-    var text = document.createTextNode(item.value);
+    const para = document.createElement("P");
+    const text = document.createTextNode(item.value);
     div.appendChild(para);
     para.appendChild(text);
-    var btn = document.createElement("BUTTON");
+    const btn = document.createElement("BUTTON");
     btn.addEventListener("click", this.deleteHandler);
-    btn.innerText = "Delete";
+    btn.innerText = "X";
     btn.setAttribute("id", `delete-${item.id}`);
     btn.setAttribute("data-id", item.id);
     div.appendChild(btn);

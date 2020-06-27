@@ -84,13 +84,13 @@ class ToDoLogic {
   confirmAddHandler(evt) {
     const input = document.getElementById("new-item");
     const newItemText = input.value;
-    if (newItemText === "") {
-      return;
-    }
     input.value = "";
     const addPanel = document.getElementById("add-item-panel");
     addPanel.classList.add("fade-out");
     addPanel.addEventListener("animationend", this.removeFadeOut);
+    if (newItemText === "") {
+      return;
+    }
     const existingStoredItems = JSON.parse(window.localStorage.getItem("todo"));
     if (existingStoredItems.length === 0) {
       document.getElementById("todo-list").classList.remove("hidden");

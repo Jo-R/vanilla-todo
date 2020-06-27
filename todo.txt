@@ -1,4 +1,4 @@
-- make the add item look better - animate appearance etc, cancel btn
+- login error
 - mark as done but keep
 - edit items
 - semantic html

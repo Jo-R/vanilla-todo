@@ -2,6 +2,7 @@
 - mark as done but keep
 - edit items
 - semantic html
+- css bem?
 - a11y check
 - priorities - mark as high -> topof displayed list
 - search/filter todos, the list gets bit don't wanna scroll

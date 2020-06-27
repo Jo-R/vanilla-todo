@@ -65,7 +65,8 @@ input {
   padding: 0.5rem 1rem;
   border-radius: 2px;
   border: none;
-  border-bottom: 3px solid transparent;
+  border-bottom: 0.25rem solid transparent;
+  padding-top: 0.75rem; /**to offset transparent border cf center placeholder */
   height: 3rem;
   display: block;
   transition: border-bottom 0.3s;
@@ -117,6 +118,32 @@ button {
   visibility: hidden;
 }
 
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.fade-in {
+  animation: fadein 1s ease-in;
+}
+
+.fade-out {
+  animation: fadeout 1s ease-in;
+}
+
 .flex-column-centered {
   display: flex;
   flex-direction: column;
@@ -131,6 +158,20 @@ button {
   border-radius: 5px;
   border: 5px solid var(--second-color-dark);
   box-shadow: 2px 2px 3px var(--main-color-light);
+}
+
+.add-item-ribbon {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.add-item-inputs {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  margin-left: 2rem;
 }
 
 .main-list {

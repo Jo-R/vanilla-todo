@@ -3,6 +3,8 @@ class ToDoLogic {
     this.addHandler = this.addHandler.bind(this);
     this.confirmAddHandler = this.confirmAddHandler.bind(this);
     this.deleteHandler = this.deleteHandler.bind(this);
+    this.removeFadeIn = this.removeFadeIn.bind(this);
+    this.removeFadeOut = this.removeFadeOut.bind(this);
     this.addBtn = document.getElementById("add-btn");
     this.addBtn.addEventListener("click", this.addHandler);
     this.addBtn = document.getElementById("confirm-add");
@@ -15,7 +17,7 @@ class ToDoLogic {
       }
       document.getElementById("todo-list").classList.remove("hidden");
       items.map((item, idx) => {
-        this.createListItem(item, idx);
+        this.createListItem(item);
       });
     } else {
       const items = [];
@@ -23,29 +25,46 @@ class ToDoLogic {
     }
   }
 
+  removeFadeIn(evt) {
+    evt.target.classList.remove("fade-in");
+    evt.target.removeEventListener("animationend", this.removeFadeIn);
+  }
+
+  removeFadeOut(evt) {
+    console.log("firing");
+    evt.target.classList.remove("fade-out");
+    evt.target.classList.add("hidden");
+    evt.target.removeEventListener("animationend", this.removeFadeOut);
+  }
+
   addHandler(evt) {
-    document.getElementById("new-item").classList.remove("hidden");
-    document.getElementById("confirm-add").classList.remove("hidden");
+    const addPanel = document.getElementById("add-item-panel");
+    addPanel.classList.remove("hidden");
+    addPanel.classList.add("fade-in");
+    addPanel.addEventListener("animationend", this.removeFadeIn);
   }
 
   deleteHandler(evt) {
     const idToDelete = document.getElementById(evt.target.id).dataset.id;
-    const newList = JSON.parse(window.localStorage.getItem("todo")).filter(
-      (item) => item.id != idToDelete
-    );
-    const toRemove = document.getElementById(`item-${idToDelete}`);
-    toRemove.parentNode.removeChild(toRemove);
+    const newList = JSON.parse(window.localStorage.getItem("todo"))
+      .filter((item) => item.id != idToDelete)
+      .map((item, idx) => {
+        return { ...item, id: idx + 1 };
+      });
     localStorage.setItem("todo", JSON.stringify(newList));
     if (newList.length === 0) {
-      document.getElementById("todo-list").classList.add("hidden");
+      const list = document.getElementById("todo-list");
+      list.innerHTML = "";
+      list.classList.add("hidden");
       return;
     }
+    document.getElementById("todo-list").innerHTML = "";
     newList.map((item) => {
       this.createListItem(item);
     });
   }
 
-  createListItem(item, index) {
+  createListItem(item) {
     var div = document.createElement("DIV");
     div.classList.add("item-container");
     div.setAttribute("id", `item-${item.id}`);
@@ -65,9 +84,13 @@ class ToDoLogic {
   confirmAddHandler(evt) {
     const input = document.getElementById("new-item");
     const newItemText = input.value;
+    if (newItemText === "") {
+      return;
+    }
     input.value = "";
-    input.classList.add("hidden");
-    document.getElementById("confirm-add").classList.add("hidden");
+    const addPanel = document.getElementById("add-item-panel");
+    addPanel.classList.add("fade-out");
+    addPanel.addEventListener("animationend", this.removeFadeOut);
     const existingStoredItems = JSON.parse(window.localStorage.getItem("todo"));
     if (existingStoredItems.length === 0) {
       document.getElementById("todo-list").classList.remove("hidden");
@@ -78,9 +101,7 @@ class ToDoLogic {
     };
     const newList = [...existingStoredItems, newItem];
     localStorage.setItem("todo", JSON.stringify(newList));
-    newList.map((item) => {
-      this.createListItem(item);
-    });
+    this.createListItem(newItem);
   }
 }
 

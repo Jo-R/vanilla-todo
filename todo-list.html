@@ -8,9 +8,13 @@
   </head>
   <body>
     <div class="panel">
-      <button id="add-btn">Add</button>
-      <input id="new-item" class="hidden" />
-      <button id="confirm-add" class="hidden">OK</button>
+      <div class="add-item-ribbon">
+        <button id="add-btn">Add</button>
+        <div id="add-item-panel" class="hidden add-item-inputs">
+          <input id="new-item" />
+          <button id="confirm-add">OK</button>
+        </div>
+      </div>
 
       <div id="todo-list" class="main-list hidden"></div>
     </div>

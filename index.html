@@ -9,13 +9,17 @@
   <body class="flex-column-centered">
     <h1>Vanilla todo list</h1>
 
-    <div class="panel">
-      <label for="username">Username:</label>
-      <input id="username" />
-      <label for="password">Password:</label>
-      <input id="password" type="password" />
-      <button id="login-btn">Let me in!</button>
+    <div class="panel flex-column-centered">
+      <div class="form-inputs">
+        <input id="username" placeholder="Username" />
+        <label for="username" class="hover-label">Username:</label>
+      </div>
+      <div class="form-inputs">
+        <input id="password" type="password" placeholder="Password" />
+        <label for="password" class="hover-label">Password:</label>
+      </div>
       <p class="light-text">Login using admin-admin</p>
+      <button id="login-btn">Let me in!</button>
     </div>
 
     <script src="./scripts/login-logic.js"></script>

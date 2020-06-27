@@ -1,7 +1,8 @@
 - make the add item look better - animate appearance etc
 - mark as done but keep
 - edit items
-- do that placeholders to labels thing on the inputs on login
+- semantic html
+- a11y check
 - priorities - mark as high -> topof displayed list
 - search/filter todos, the list gets bit don't wanna scroll
 - pomodoro - maybe count how many you've done on an item

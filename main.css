@@ -27,6 +27,7 @@ html {
 body {
   box-sizing: border-box;
   font-family: "Open Sans", sans-serif;
+  padding: 2rem;
 }
 
 h1 {
@@ -57,9 +58,42 @@ label {
   color: var(--main-text-color-dark);
 }
 
-.light-text {
-  color: var(--main-text-color-light);
-  font-style: italic;
+.form-inputs {
+  position: relative;
+  margin: 1.5rem;
+}
+
+input {
+  font-size: 1.5rem;
+  font-family: inherit;
+  color: inherit;
+  padding: 0.5rem 1rem;
+  border-radius: 2px;
+  border: none;
+  border-bottom: 3px solid transparent;
+  height: 3rem;
+  display: block;
+  transition: border-bottom 0.3s;
+}
+
+input:focus {
+  outline: none;
+  border-bottom: 3px solid var(--main-text-color-light);
+}
+
+.hover-label {
+  margin-left: 0.5rem; /**line up with input*/
+  position: absolute;
+  font-size: 1.2rem;
+  top: 2.8rem;
+  opacity: 0;
+  transition: opacity 0.1s, top 0.6s;
+}
+
+input:not(:placeholder-shown) + .hover-label {
+  opacity: 1;
+  top: -1.8rem;
+  transition: opacity 0.7s, top 0.3s;
 }
 
 button {
@@ -69,6 +103,11 @@ button {
   color: var(--main-color-dark);
   border: 2px solid var(--third-color);
   font-weight: bold;
+}
+
+.light-text {
+  color: var(--main-text-color-light);
+  font-style: italic;
 }
 
 .hidden {
@@ -81,7 +120,6 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 5rem;
 }
 
 .panel {

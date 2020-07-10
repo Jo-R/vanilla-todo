@@ -3,6 +3,7 @@ class ToDoLogic {
     this.addHandler = this.addHandler.bind(this);
     this.confirmAddHandler = this.confirmAddHandler.bind(this);
     this.deleteHandler = this.deleteHandler.bind(this);
+    this.doneHandler = this.doneHandler.bind(this);
     this.removeFadeIn = this.removeFadeIn.bind(this);
     this.removeFadeOut = this.removeFadeOut.bind(this);
     this.addBtn = document.getElementById("add-btn");
@@ -12,7 +13,7 @@ class ToDoLogic {
 
     if (localStorage.getItem("todo")) {
       const items = JSON.parse(window.localStorage.getItem("todo"));
-      if (items.length === 0) {
+      if (!items.some((el) => el.isDone == false)) {
         return;
       }
       document.getElementById("todo-list").classList.remove("hidden");
@@ -31,7 +32,6 @@ class ToDoLogic {
   }
 
   removeFadeOut(evt) {
-    console.log("firing");
     evt.target.classList.remove("fade-out");
     evt.target.classList.add("hidden");
     evt.target.removeEventListener("animationend", this.removeFadeOut);
@@ -44,6 +44,19 @@ class ToDoLogic {
     addPanel.addEventListener("animationend", this.removeFadeIn);
   }
 
+  displayUpdatedList(newList) {
+    const list = document.getElementById("todo-list");
+    list.innerHTML = "";
+    if (!newList.some((el) => el.isDone == false)) {
+      list.classList.add("hidden");
+      return;
+    }
+    list.classList.remove("hidden");
+    newList.map((item) => {
+      this.createListItem(item);
+    });
+  }
+
   deleteHandler(evt) {
     const idToDelete = document.getElementById(evt.target.id).dataset.id;
     const newList = JSON.parse(window.localStorage.getItem("todo"))
@@ -52,19 +65,31 @@ class ToDoLogic {
         return { ...item, id: idx + 1 };
       });
     localStorage.setItem("todo", JSON.stringify(newList));
-    if (newList.length === 0) {
-      const list = document.getElementById("todo-list");
-      list.innerHTML = "";
-      list.classList.add("hidden");
-      return;
-    }
-    document.getElementById("todo-list").innerHTML = "";
-    newList.map((item) => {
-      this.createListItem(item);
-    });
+    this.displayUpdatedList(newList);
+  }
+
+  doneHandler(evt) {
+    const idToUpdate = document.getElementById(evt.target.id).dataset.id;
+    const newList = JSON.parse(window.localStorage.getItem("todo")).map(
+      (item) => {
+        if (item.id == idToUpdate) {
+          return {
+            ...item,
+            isDone: true,
+          };
+        } else {
+          return item;
+        }
+      }
+    );
+    localStorage.setItem("todo", JSON.stringify(newList));
+    this.displayUpdatedList(newList);
   }
 
   createListItem(item) {
+    if (item.isDone) {
+      return;
+    }
     const div = document.createElement("LI");
     div.classList.add("item-container");
     div.setAttribute("id", `item-${item.id}`);
@@ -73,12 +98,21 @@ class ToDoLogic {
     para.classList.add("item-text");
     div.appendChild(para);
     para.appendChild(text);
-    const btn = document.createElement("BUTTON");
-    btn.addEventListener("click", this.deleteHandler);
-    btn.innerText = "X";
-    btn.setAttribute("id", `delete-${item.id}`);
-    btn.setAttribute("data-id", item.id);
-    div.appendChild(btn);
+    const btnDiv = document.createElement("DIV");
+    btnDiv.classList.add("item-btn-container");
+    const doneBtn = document.createElement("BUTTON");
+    doneBtn.addEventListener("click", this.doneHandler);
+    doneBtn.innerText = "Done";
+    doneBtn.setAttribute("id", `done-${item.id}`);
+    doneBtn.setAttribute("data-id", item.id);
+    btnDiv.appendChild(doneBtn);
+    const delBtn = document.createElement("BUTTON");
+    delBtn.addEventListener("click", this.deleteHandler);
+    delBtn.innerText = "X";
+    delBtn.setAttribute("id", `delete-${item.id}`);
+    delBtn.setAttribute("data-id", item.id);
+    btnDiv.appendChild(delBtn);
+    div.appendChild(btnDiv);
     document.getElementById("todo-list").appendChild(div);
   }
 
@@ -99,10 +133,11 @@ class ToDoLogic {
     const newItem = {
       id: existingStoredItems.length + 1,
       value: newItemText,
+      isDone: false,
     };
     const newList = [...existingStoredItems, newItem];
     localStorage.setItem("todo", JSON.stringify(newList));
-    this.createListItem(newItem);
+    this.displayUpdatedList(newList);
   }
 }
 

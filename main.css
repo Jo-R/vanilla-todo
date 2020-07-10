@@ -216,3 +216,7 @@ button {
   max-width: 80%;
   overflow-wrap: break-word;
 }
+
+.item-btn-container > button:nth-child(even) {
+  margin-left: 1rem;
+}

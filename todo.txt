@@ -1,4 +1,4 @@
-- mark as done but keep
+- display marked as done on separate list
 - edit items
 - semantic html
 - css bem? orgainise better anyway

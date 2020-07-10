@@ -65,11 +65,12 @@ class ToDoLogic {
   }
 
   createListItem(item) {
-    const div = document.createElement("DIV");
+    const div = document.createElement("LI");
     div.classList.add("item-container");
     div.setAttribute("id", `item-${item.id}`);
     const para = document.createElement("P");
     const text = document.createTextNode(item.value);
+    para.classList.add("item-text");
     div.appendChild(para);
     para.appendChild(text);
     const btn = document.createElement("BUTTON");

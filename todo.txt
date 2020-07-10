@@ -1,4 +1,3 @@
-- handle very long todos
 - mark as done but keep
 - edit items
 - semantic html

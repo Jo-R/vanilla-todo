@@ -209,4 +209,10 @@ button {
   border: 1px solid var(--accent-color-2);
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.item-text {
+  max-width: 80%;
+  overflow-wrap: break-word;
 }

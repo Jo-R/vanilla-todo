@@ -2,14 +2,19 @@ class ToDoLogic {
   constructor() {
     this.addHandler = this.addHandler.bind(this);
     this.confirmAddHandler = this.confirmAddHandler.bind(this);
+    this.showDoneHandler = this.showDoneHandler.bind(this);
     this.deleteHandler = this.deleteHandler.bind(this);
     this.doneHandler = this.doneHandler.bind(this);
     this.removeFadeIn = this.removeFadeIn.bind(this);
     this.removeFadeOut = this.removeFadeOut.bind(this);
     this.addBtn = document.getElementById("add-btn");
     this.addBtn.addEventListener("click", this.addHandler);
-    this.addBtn = document.getElementById("confirm-add");
-    this.addBtn.addEventListener("click", this.confirmAddHandler);
+    this.confirmAddBtn = document.getElementById("confirm-add");
+    this.confirmAddBtn.addEventListener("click", this.confirmAddHandler);
+    this.showDoneBtn = document.getElementById("show-done-btn");
+    this.showDoneBtn.addEventListener("click", this.showDoneHandler);
+
+    this.isShowingDone = false;
 
     if (localStorage.getItem("todo")) {
       const items = JSON.parse(window.localStorage.getItem("todo"));
@@ -17,9 +22,11 @@ class ToDoLogic {
         return;
       }
       document.getElementById("todo-list").classList.remove("hidden");
-      items.map((item, idx) => {
-        this.createListItem(item);
-      });
+      for (const item of items) {
+        if (!item.isDone) {
+          this.createListItem(item);
+        }
+      }
     } else {
       const items = [];
       localStorage.setItem("todo", JSON.stringify(items));
@@ -47,14 +54,29 @@ class ToDoLogic {
   displayUpdatedList(newList) {
     const list = document.getElementById("todo-list");
     list.innerHTML = "";
-    if (!newList.some((el) => el.isDone == false)) {
-      list.classList.add("hidden");
-      return;
+    if (this.isShowingDone) {
+      if (!newList.some((el) => el.isDone == true)) {
+        list.classList.add("hidden");
+        return;
+      }
+      list.classList.remove("hidden");
+      for (const item of newList) {
+        if (item.isDone) {
+          this.createListItem(item);
+        }
+      }
+    } else {
+      if (!newList.some((el) => el.isDone == false)) {
+        list.classList.add("hidden");
+        return;
+      }
+      list.classList.remove("hidden");
+      for (const item of newList) {
+        if (!item.isDone) {
+          this.createListItem(item);
+        }
+      }
     }
-    list.classList.remove("hidden");
-    newList.map((item) => {
-      this.createListItem(item);
-    });
   }
 
   deleteHandler(evt) {
@@ -87,9 +109,6 @@ class ToDoLogic {
   }
 
   createListItem(item) {
-    if (item.isDone) {
-      return;
-    }
     const div = document.createElement("LI");
     div.classList.add("item-container");
     div.setAttribute("id", `item-${item.id}`);
@@ -100,12 +119,14 @@ class ToDoLogic {
     para.appendChild(text);
     const btnDiv = document.createElement("DIV");
     btnDiv.classList.add("item-btn-container");
-    const doneBtn = document.createElement("BUTTON");
-    doneBtn.addEventListener("click", this.doneHandler);
-    doneBtn.innerText = "Done";
-    doneBtn.setAttribute("id", `done-${item.id}`);
-    doneBtn.setAttribute("data-id", item.id);
-    btnDiv.appendChild(doneBtn);
+    if (!item.isDone) {
+      const doneBtn = document.createElement("BUTTON");
+      doneBtn.addEventListener("click", this.doneHandler);
+      doneBtn.innerText = "Done";
+      doneBtn.setAttribute("id", `done-${item.id}`);
+      doneBtn.setAttribute("data-id", item.id);
+      btnDiv.appendChild(doneBtn);
+    }
     const delBtn = document.createElement("BUTTON");
     delBtn.addEventListener("click", this.deleteHandler);
     delBtn.innerText = "X";
@@ -138,6 +159,17 @@ class ToDoLogic {
     const newList = [...existingStoredItems, newItem];
     localStorage.setItem("todo", JSON.stringify(newList));
     this.displayUpdatedList(newList);
+  }
+
+  showDoneHandler(evt) {
+    const items = JSON.parse(window.localStorage.getItem("todo"));
+    if (!items.some((el) => el.isDone == true)) {
+      return; // TODO DISPLAY SOEMTHING
+    }
+    const list = document.getElementById("todo-list");
+    this.isShowingDone = true;
+    this.displayUpdatedList(items);
+    // TODO change button to show todo and handler for that
   }
 }
 

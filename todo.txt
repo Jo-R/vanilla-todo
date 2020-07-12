@@ -1,5 +1,6 @@
 - display marked as done on separate list
 - edit items
+- better ui design
 - semantic html
 - css bem? orgainise better anyway
 - a11y check

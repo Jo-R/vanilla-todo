@@ -18,15 +18,7 @@ class ToDoLogic {
 
     if (localStorage.getItem("todo")) {
       const items = JSON.parse(window.localStorage.getItem("todo"));
-      if (!items.some((el) => el.isDone == false)) {
-        return;
-      }
-      document.getElementById("todo-list").classList.remove("hidden");
-      for (const item of items) {
-        if (!item.isDone) {
-          this.createListItem(item);
-        }
-      }
+      this.displayUpdatedList(items);
     } else {
       const items = [];
       localStorage.setItem("todo", JSON.stringify(items));

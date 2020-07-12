@@ -177,8 +177,15 @@ button {
 
 .add-item-ribbon {
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
+}
+
+@media (min-width: 600px) {
+  .add-item-ribbon {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+  }
 }
 
 .add-item-inputs {
@@ -195,7 +202,7 @@ button {
 
 .main-list {
   padding: 1rem;
-  margin: 2rem;
+  margin-top: 2rem;
   background-color: var(--third-color-light);
   border-radius: 5px;
   border: 1px solid var(--third-color-dark);
@@ -208,8 +215,15 @@ button {
   border-radius: 5px;
   border: 1px solid var(--accent-color-2);
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+}
+
+@media (min-width: 600px) {
+  .item-container {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
 .item-text {

@@ -2,7 +2,7 @@ class ToDoLogic {
   constructor() {
     this.addHandler = this.addHandler.bind(this);
     this.confirmAddHandler = this.confirmAddHandler.bind(this);
-    this.showDoneHandler = this.showDoneHandler.bind(this);
+    this.toggleShowDone = this.toggleShowDone.bind(this);
     this.deleteHandler = this.deleteHandler.bind(this);
     this.doneHandler = this.doneHandler.bind(this);
     this.removeFadeIn = this.removeFadeIn.bind(this);
@@ -12,7 +12,7 @@ class ToDoLogic {
     this.confirmAddBtn = document.getElementById("confirm-add");
     this.confirmAddBtn.addEventListener("click", this.confirmAddHandler);
     this.showDoneBtn = document.getElementById("show-done-btn");
-    this.showDoneBtn.addEventListener("click", this.showDoneHandler);
+    this.showDoneBtn.addEventListener("click", this.toggleShowDone);
 
     this.isShowingDone = false;
 
@@ -161,15 +161,16 @@ class ToDoLogic {
     this.displayUpdatedList(newList);
   }
 
-  showDoneHandler(evt) {
+  toggleShowDone(evt) {
     const items = JSON.parse(window.localStorage.getItem("todo"));
-    if (!items.some((el) => el.isDone == true)) {
-      return; // TODO DISPLAY SOEMTHING
+    if (this.isShowingDone) {
+      this.isShowingDone = false;
+      this.showDoneBtn.innerHTML = "Show done";
+    } else {
+      this.isShowingDone = true;
+      this.showDoneBtn.innerHTML = "Show todo";
     }
-    const list = document.getElementById("todo-list");
-    this.isShowingDone = true;
     this.displayUpdatedList(items);
-    // TODO change button to show todo and handler for that
   }
 }
 

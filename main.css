@@ -99,9 +99,10 @@ input:not(:placeholder-shown) + .hover-label {
 }
 
 button {
-  padding: 1rem 2rem;
+  padding: 0.7rem 1.5rem;
   border-radius: 5px;
   background-color: var(--third-color-light);
+  font-size: 1em;
   color: var(--main-text-color-dark);
   border: 2px solid var(--third-color);
   font-weight: bold;

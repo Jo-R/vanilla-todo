@@ -44,30 +44,21 @@ class ToDoLogic {
   }
 
   displayUpdatedList(newList) {
+    let itemsToDisplay;
+    if (this.isShowingDone) {
+      itemsToDisplay = newList.filter((el) => el.isDone == true);
+    } else {
+      itemsToDisplay = newList.filter((el) => el.isDone == false);
+    }
     const list = document.getElementById("todo-list");
     list.innerHTML = "";
-    if (this.isShowingDone) {
-      if (!newList.some((el) => el.isDone == true)) {
-        list.classList.add("hidden");
-        return;
-      }
-      list.classList.remove("hidden");
-      for (const item of newList) {
-        if (item.isDone) {
-          this.createListItem(item);
-        }
-      }
-    } else {
-      if (!newList.some((el) => el.isDone == false)) {
-        list.classList.add("hidden");
-        return;
-      }
-      list.classList.remove("hidden");
-      for (const item of newList) {
-        if (!item.isDone) {
-          this.createListItem(item);
-        }
-      }
+    if (itemsToDisplay.length === 0) {
+      list.classList.add("hidden");
+      return;
+    }
+    list.classList.remove("hidden");
+    for (const item of itemsToDisplay) {
+      this.createListItem(item);
     }
   }
 
@@ -155,6 +146,7 @@ class ToDoLogic {
 
   toggleShowDone(evt) {
     const items = JSON.parse(window.localStorage.getItem("todo"));
+    let itemsToShow;
     if (this.isShowingDone) {
       this.isShowingDone = false;
       this.showDoneBtn.innerHTML = "Show done";

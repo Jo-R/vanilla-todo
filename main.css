@@ -232,6 +232,6 @@ button {
   overflow-wrap: break-word;
 }
 
-.item-btn-container > button:nth-child(even) {
+.item-btn-container > button {
   margin-left: 1rem;
 }

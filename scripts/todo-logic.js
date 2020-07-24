@@ -5,6 +5,7 @@ class ToDoLogic {
     this.toggleShowDone = this.toggleShowDone.bind(this);
     this.deleteHandler = this.deleteHandler.bind(this);
     this.doneHandler = this.doneHandler.bind(this);
+    this.editHandler = this.editHandler.bind(this);
     this.removeFadeIn = this.removeFadeIn.bind(this);
     this.removeFadeOut = this.removeFadeOut.bind(this);
     this.addBtn = document.getElementById("add-btn");
@@ -91,6 +92,10 @@ class ToDoLogic {
     this.displayUpdatedList(newList);
   }
 
+  editHandler(evt) {
+    // TODO EDIT THE THING
+  }
+
   createListItem(item) {
     const div = document.createElement("LI");
     div.classList.add("item-container");
@@ -105,10 +110,16 @@ class ToDoLogic {
     if (!item.isDone) {
       const doneBtn = document.createElement("BUTTON");
       doneBtn.addEventListener("click", this.doneHandler);
-      doneBtn.innerText = "Done";
+      doneBtn.innerText = "done";
       doneBtn.setAttribute("id", `done-${item.id}`);
       doneBtn.setAttribute("data-id", item.id);
       btnDiv.appendChild(doneBtn);
+      const editBtn = document.createElement("BUTTON");
+      editBtn.addEventListener("click", this.editHandler);
+      editBtn.innerText = "edit";
+      editBtn.setAttribute("id", `edit-${item.id}`);
+      editBtn.setAttribute("data-id", item.id);
+      btnDiv.appendChild(editBtn);
     }
     const delBtn = document.createElement("BUTTON");
     delBtn.addEventListener("click", this.deleteHandler);

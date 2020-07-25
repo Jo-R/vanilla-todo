@@ -230,6 +230,7 @@ button {
 .item-text {
   max-width: 80%;
   overflow-wrap: break-word;
+  padding: 0.5rem;
 }
 
 .item-btn-container > button {

@@ -1,11 +1,6 @@
-- edit items
 - better ui design
 - semantic html
-- css/js organisation
+- css/js organisation and naming
 - a11y
 
-extra features:
-- mark high priority
-- categorise
-- light and dark theme
 

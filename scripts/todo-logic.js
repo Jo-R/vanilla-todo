@@ -6,6 +6,7 @@ class ToDoLogic {
     this.deleteHandler = this.deleteHandler.bind(this);
     this.doneHandler = this.doneHandler.bind(this);
     this.editHandler = this.editHandler.bind(this);
+    this.saveEditHandler = this.saveEditHandler.bind(this);
     this.removeFadeIn = this.removeFadeIn.bind(this);
     this.removeFadeOut = this.removeFadeOut.bind(this);
     this.addBtn = document.getElementById("add-btn");
@@ -92,8 +93,24 @@ class ToDoLogic {
     this.displayUpdatedList(newList);
   }
 
+  saveEditHandler(evt) {
+    const id = document.getElementById(evt.target.id).dataset.id;
+    document
+      .getElementById(`text-${id}`)
+      .setAttribute("contenteditable", "false");
+    const btn = document.getElementById(`edit-${id}`);
+    btn.innerHTML = "edit";
+    btn.addEventListener("click", this.editHandler);
+  }
+
   editHandler(evt) {
-    // TODO EDIT THE THING
+    const id = document.getElementById(evt.target.id).dataset.id;
+    const item = document.getElementById(`text-${id}`);
+    item.setAttribute("contenteditable", "true");
+    item.focus();
+    const btn = document.getElementById(`edit-${id}`);
+    btn.innerHTML = "save";
+    btn.addEventListener("click", this.saveEditHandler);
   }
 
   createListItem(item) {
@@ -103,23 +120,25 @@ class ToDoLogic {
     const para = document.createElement("P");
     const text = document.createTextNode(item.value);
     para.classList.add("item-text");
+    para.setAttribute("id", `text-${item.id}`);
+    para.setAttribute("contenteditable", "false");
     div.appendChild(para);
     para.appendChild(text);
     const btnDiv = document.createElement("DIV");
     btnDiv.classList.add("item-btn-container");
     if (!item.isDone) {
-      const doneBtn = document.createElement("BUTTON");
-      doneBtn.addEventListener("click", this.doneHandler);
-      doneBtn.innerText = "done";
-      doneBtn.setAttribute("id", `done-${item.id}`);
-      doneBtn.setAttribute("data-id", item.id);
-      btnDiv.appendChild(doneBtn);
       const editBtn = document.createElement("BUTTON");
       editBtn.addEventListener("click", this.editHandler);
       editBtn.innerText = "edit";
       editBtn.setAttribute("id", `edit-${item.id}`);
       editBtn.setAttribute("data-id", item.id);
       btnDiv.appendChild(editBtn);
+      const doneBtn = document.createElement("BUTTON");
+      doneBtn.addEventListener("click", this.doneHandler);
+      doneBtn.innerText = "done";
+      doneBtn.setAttribute("id", `done-${item.id}`);
+      doneBtn.setAttribute("data-id", item.id);
+      btnDiv.appendChild(doneBtn);
     }
     const delBtn = document.createElement("BUTTON");
     delBtn.addEventListener("click", this.deleteHandler);

@@ -2,6 +2,7 @@ class LoginLogic {
   constructor(loginPanel) {
     this.loginBtn = document.getElementById("login-btn");
     this.loginBtn.addEventListener("click", this.login);
+    document.getElementById("username").focus();
   }
 
   login(evt) {

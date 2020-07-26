@@ -1,6 +1,0 @@
-- better ui design
-- semantic html
-- css/js organisation and naming
-- a11y
-
-

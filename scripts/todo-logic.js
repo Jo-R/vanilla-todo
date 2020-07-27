@@ -1,14 +1,13 @@
 class ToDoLogic {
   constructor() {
     this.addHandler = this.addHandler.bind(this);
+    this.handleListButtonClick = this.handleListButtonClick.bind(this);
     this.confirmAddHandler = this.confirmAddHandler.bind(this);
     this.toggleShowDone = this.toggleShowDone.bind(this);
-    this.deleteHandler = this.deleteHandler.bind(this);
-    this.doneHandler = this.doneHandler.bind(this);
-    this.editHandler = this.editHandler.bind(this);
-    this.saveEditHandler = this.saveEditHandler.bind(this);
     this.removeFadeIn = this.removeFadeIn.bind(this);
     this.removeFadeOut = this.removeFadeOut.bind(this);
+    this.todoList = document.getElementById("todo-list");
+    this.todoList.addEventListener("click", this.handleListButtonClick);
     this.addBtn = document.getElementById("add-btn");
     this.addBtn.addEventListener("click", this.addHandler);
     this.confirmAddBtn = document.getElementById("confirm-add");
@@ -52,20 +51,36 @@ class ToDoLogic {
     } else {
       itemsToDisplay = newList.filter((el) => el.isDone == false);
     }
-    const list = document.getElementById("todo-list");
-    list.innerHTML = "";
+    this.todoList.innerHTML = "";
     if (itemsToDisplay.length === 0) {
-      list.classList.add("hidden");
+      this.todoList.classList.add("hidden");
       return;
     }
-    list.classList.remove("hidden");
+    this.todoList.classList.remove("hidden");
     for (const item of itemsToDisplay) {
       this.createListItem(item);
     }
   }
 
-  deleteHandler(evt) {
-    const idToDelete = document.getElementById(evt.target.id).dataset.id;
+  handleListButtonClick(evt) {
+    const [action, id] = evt.target.id.split("-");
+    switch (action) {
+      case "edit":
+        this.editHandler(id);
+        break;
+      case "savedEdit":
+        this.saveEditHandler(id);
+        break;
+      case "done":
+        this.doneHandler(id);
+        break;
+      case "delete":
+        this.deleteHandler(id);
+        break;
+    }
+  }
+
+  deleteHandler(idToDelete) {
     const newList = JSON.parse(window.localStorage.getItem("todo"))
       .filter((item) => item.id != idToDelete)
       .map((item, idx) => {
@@ -75,8 +90,7 @@ class ToDoLogic {
     this.displayUpdatedList(newList);
   }
 
-  doneHandler(evt) {
-    const idToUpdate = document.getElementById(evt.target.id).dataset.id;
+  doneHandler(idToUpdate) {
     const newList = JSON.parse(window.localStorage.getItem("todo")).map(
       (item) => {
         if (item.id == idToUpdate) {
@@ -93,24 +107,22 @@ class ToDoLogic {
     this.displayUpdatedList(newList);
   }
 
-  saveEditHandler(evt) {
-    const id = document.getElementById(evt.target.id).dataset.id;
+  saveEditHandler(id) {
     document
       .getElementById(`text-${id}`)
       .setAttribute("contenteditable", "false");
     const btn = document.getElementById(`edit-${id}`);
     btn.innerHTML = "edit";
-    btn.addEventListener("click", this.editHandler);
+    btn.setAttribute("id", `edit-${id}`);
   }
 
-  editHandler(evt) {
-    const id = document.getElementById(evt.target.id).dataset.id;
+  editHandler(id) {
     const item = document.getElementById(`text-${id}`);
     item.setAttribute("contenteditable", "true");
     item.focus();
     const btn = document.getElementById(`edit-${id}`);
     btn.innerHTML = "save";
-    btn.addEventListener("click", this.saveEditHandler);
+    btn.setAttribute("id", `saveEdit-${id}`);
   }
 
   createListItem(item) {
@@ -128,26 +140,20 @@ class ToDoLogic {
     btnDiv.classList.add("item-btn-container");
     if (!item.isDone) {
       const editBtn = document.createElement("BUTTON");
-      editBtn.addEventListener("click", this.editHandler);
       editBtn.innerText = "edit";
       editBtn.setAttribute("id", `edit-${item.id}`);
-      editBtn.setAttribute("data-id", item.id);
       btnDiv.appendChild(editBtn);
       const doneBtn = document.createElement("BUTTON");
-      doneBtn.addEventListener("click", this.doneHandler);
       doneBtn.innerText = "done";
       doneBtn.setAttribute("id", `done-${item.id}`);
-      doneBtn.setAttribute("data-id", item.id);
       btnDiv.appendChild(doneBtn);
     }
     const delBtn = document.createElement("BUTTON");
-    delBtn.addEventListener("click", this.deleteHandler);
     delBtn.innerText = "X";
     delBtn.setAttribute("id", `delete-${item.id}`);
-    delBtn.setAttribute("data-id", item.id);
     btnDiv.appendChild(delBtn);
     div.appendChild(btnDiv);
-    document.getElementById("todo-list").appendChild(div);
+    this.todoList.appendChild(div);
   }
 
   confirmAddHandler(evt) {
@@ -162,7 +168,7 @@ class ToDoLogic {
     }
     const existingStoredItems = JSON.parse(window.localStorage.getItem("todo"));
     if (existingStoredItems.length === 0) {
-      document.getElementById("todo-list").classList.remove("hidden");
+      this.todoList.classList.remove("hidden");
     }
     const newItem = {
       id: existingStoredItems.length + 1,
